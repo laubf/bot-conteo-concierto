@@ -1,18 +1,24 @@
-import tweepy
 import os
-from datetime import datetime
+import tweepy
+from datetime import date
 
-api_key = os.environ["API_KEY"]
-api_secret = os.environ["API_SECRET"]
-access_token = os.environ["ACCESS_TOKEN"]
-access_token_secret = os.environ["ACCESS_TOKEN_SECRET"]
+# Autenticación con API v2
+client = tweepy.Client(
+    bearer_token=os.environ['BEARER_TOKEN'],
+    consumer_key=os.environ['API_KEY'],
+    consumer_secret=os.environ['API_SECRET'],
+    access_token=os.environ['ACCESS_TOKEN'],
+    access_token_secret=os.environ['ACCESS_TOKEN_SECRET']
+)
 
-auth = tweepy.OAuth1UserHandler(api_key, api_secret, access_token, access_token_secret)
-api = tweepy.API(auth)
+# Fecha del concierto
+fecha_concierto = date(2025, 5, 21)
+hoy = date.today()
+dias_transcurridos = (hoy - fecha_concierto).days
 
-fecha_concierto = datetime(2025, 5, 21)
-hoy = datetime.now()
-dias = (hoy - fecha_concierto).days
+# Crea el mensaje
+mensaje = f"{dias_transcurridos} since Hozier's concert 🥲"
 
-mensaje = f"{dias} since Hozier's concert 🥲"
-api.update_status(mensaje)
+# Publica el tweet
+response = client.create_tweet(text=mensaje)
+print("Tweet publicado:", response)
