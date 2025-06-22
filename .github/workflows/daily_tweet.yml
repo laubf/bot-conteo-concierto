@@ -2,18 +2,23 @@ name: Publicar conteo diario
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # Todos los días a las 10:00 a. m. hora Colombia (15:00 UTC)
+    - cron: '0 15 * * *'  # 10am hora Colombia
   workflow_dispatch:
 
 jobs:
   tweet:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
       - name: Instalar dependencias
         run: pip install tweepy
+
       - name: Ejecutar bot
         env:
+          BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
           API_SECRET: ${{ secrets.API_SECRET }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
