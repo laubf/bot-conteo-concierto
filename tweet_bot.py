@@ -17,7 +17,7 @@ hoy = date.today()
 dias_transcurridos = (hoy - fecha_concierto).days
 
 # Crea el mensaje
-mensaje = f"{dias_transcurridos} since Hozier's concert 🥲"
+mensaje = f"{dias_transcurridos} days since Hozier's concert 🥲"
 
 # Publica el tweet
 response = client.create_tweet(text=mensaje)
