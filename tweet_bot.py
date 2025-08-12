@@ -1,24 +1,30 @@
-import os
-import tweepy
 from datetime import date
+import tweepy
+import os
 
-# Autenticación con API v2
-client = tweepy.Client(
-    bearer_token=os.environ['BEARER_TOKEN'],
-    consumer_key=os.environ['API_KEY'],
-    consumer_secret=os.environ['API_SECRET'],
-    access_token=os.environ['ACCESS_TOKEN'],
-    access_token_secret=os.environ['ACCESS_TOKEN_SECRET']
-)
+# Fechas
+fecha_concierto_pasado = date(2024, 5, 20)   # Fecha de tu concierto pasado
+fecha_concierto_nuevo = date(2025, 10, 14)   # Fecha del próximo concierto
 
-# Fecha del concierto
-fecha_concierto = date(2025, 5, 21)
 hoy = date.today()
-dias_transcurridos = (hoy - fecha_concierto).days
 
-# Crea el mensaje
-mensaje = f"{dias_transcurridos} days since Hozier's concert 🥲"
+# Conteo desde el concierto pasado
+dias_desde = (hoy - fecha_concierto_pasado).days
 
-# Publica el tweet
-response = client.create_tweet(text=mensaje)
-print("Tweet publicado:", response)
+# Conteo hasta el próximo concierto
+dias_hasta = (fecha_concierto_nuevo - hoy).days
+
+# Autenticación API v1.1
+auth = tweepy.OAuth1UserHandler(
+    os.environ['API_KEY'],
+    os.environ['API_SECRET'],
+    os.environ['ACCESS_TOKEN'],
+    os.environ['ACCESS_TOKEN_SECRET']
+)
+api = tweepy.API(auth)
+
+# Mensaje combinado
+mensaje = f"{dias_desde} days since Hozier's concert 🥲 and {dias_hasta} until I see him again 🥹"
+
+# Publicar tweet
+api.update_status(mensaje)
