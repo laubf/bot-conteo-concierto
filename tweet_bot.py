@@ -11,14 +11,21 @@ client = tweepy.Client(
     access_token_secret=os.environ['ACCESS_TOKEN_SECRET']
 )
 
-# Fecha del concierto
-fecha_concierto = date(2025, 5, 21)
+# Fechas
+fecha_concierto_pasado = date(2025, 5, 21)   # concierto ya ocurrido
+fecha_concierto_futuro = date(2025, 10, 14)  # próximo concierto
+
+# Fecha de hoy
 hoy = date.today()
-dias_transcurridos = (hoy - fecha_concierto).days
 
-# Crea el mensaje
-mensaje = f"{dias_transcurridos} días desde el concierto 🎶"
+# Cálculos
+dias_desde = (hoy - fecha_concierto_pasado).days
+dias_hasta = (fecha_concierto_futuro - hoy).days
 
-# Publica el tweet
+# Mensaje
+mensaje = f"{dias_desde} days since Hozier's concert 🥲 and {dias_hasta} days until I see him again 🥹"
+
+# Publicar tweet
 response = client.create_tweet(text=mensaje)
 print("Tweet publicado:", response)
+
