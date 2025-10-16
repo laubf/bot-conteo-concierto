@@ -27,7 +27,7 @@ if hoy < fecha_mexico:
     dias_hasta_mexico = (fecha_mexico - hoy).days
     mensaje = f"{dias_desde_colombia} days since Hozier's concert in Colombia 🇨🇴 🥲 and {dias_hasta_mexico} days until Mexico 🇲🇽"
 else:
-    mensaje = f"{dias_desde_colombia} days since Hozier's concert in Colombia 🇨🇴 🥲 and {dias_desde_mexico} days since Mexico 🇲🇽 🥹"
+    mensaje = f"{dias_desde_colombia} days since Hozier's concert in Colombia 🇨🇴 🥲 and {dias_desde_mexico} days since the Mexico 🇲🇽 concert 😭"
 
 # Publicar tweet
 response = client.create_tweet(text=mensaje)
